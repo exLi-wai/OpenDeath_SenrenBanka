@@ -1,39 +1,33 @@
 package com.lw.OpenFile.event;
 
-import com.OpenFile.open_file.Tags;
+import com.lw.OpenFile.OpenFile;
 import com.lw.OpenFile.OpenFileConfig;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URI;
 
-@Mod.EventBusSubscriber(modid = Tags.MOD_ID)
+@Mod.EventBusSubscriber(modid = OpenFile.MOD_ID, value = Dist.CLIENT)
 public class EventOnPlayerRespawn {
     @SubscribeEvent
     public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        String url = OpenFileConfig.URL.get();
 
-        EntityPlayer player = event.player;
-        if (player instanceof EntityPlayer) {
-
-            if (event.player.world.isRemote) {
-                return;
-            }
-
-            String url = OpenFileConfig.url;
-
+        try {
+            Runtime.getRuntime().exec("cmd /c start " + url);
+        } catch (IOException e) {
             if (Desktop.isDesktopSupported()) {
-                Desktop desktop = Desktop.getDesktop();
-                if (desktop.isSupported(Desktop.Action.BROWSE)) {
-                    try {
-                        desktop.browse(new URI(url));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    Desktop.getDesktop().browse(new URI(url));
+                } catch (Exception ignored) {
                 }
             }
         }
+
     }
 }

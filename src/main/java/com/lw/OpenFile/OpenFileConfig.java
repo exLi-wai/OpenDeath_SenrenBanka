@@ -1,16 +1,37 @@
 package com.lw.OpenFile;
 
-import com.OpenFile.open_file.Tags;
-import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
-@Config(modid = Tags.MOD_ID, name = "OpenFile")
+@Mod.EventBusSubscriber(modid = OpenFile.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class OpenFileConfig {
 
-    @Config.Comment("你想启动程序的路径")
-    public static String pathOpenFile = "D:\\SteamLibrary\\steamapps\\common\\SenrenBanka\\SenrenBanka.exe";
+    public static final ForgeConfigSpec SPEC;
 
-    @Config.Comment("你要打开的网址链接")
-    public static String url = "https://www.mcmod.cn/";
+    public static ForgeConfigSpec.ConfigValue<String> PATH_OPEN_FILE;
+    public static ForgeConfigSpec.ConfigValue<String> URL;
 
+    static {
+        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+
+        builder.comment("OpenFile Mod Configuration").push("client");
+
+        PATH_OPEN_FILE = builder
+                .comment("要启动的外部程序的完整路径 (例如 .exe 文件)")
+                .define("PathOpenFile", "D:\\SteamLibrary\\steamapps\\common\\SenrenBanka\\SenrenBanka.exe");
+
+        URL = builder
+                .comment("要打开的网页 URL")
+                .define("url", "https://www.mcmod.cn/");
+
+        builder.pop();
+
+        SPEC = builder.build();
+    }
+    @SubscribeEvent
+    public static void onLoad(ModConfigEvent event) {
+    }
 }
 
