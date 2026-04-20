@@ -19,12 +19,12 @@ public class OpenFileConfig {
         builder.comment("OpenFile Mod Configuration").push("client");
 
         PATH_OPEN_FILE = builder
-                .comment("要启动的外部程序的完整路径 (例如 .exe 文件)")
-                .define("PathOpenFile", "D:\\SteamLibrary\\steamapps\\common\\SenrenBanka\\SenrenBanka.exe");
+                .comment("要启动的外部程序的名字,例如 .exe 文件)")
+                .define("PathOpenFile", "SenrenBanka.exe");
 
         URL = builder
                 .comment("要打开的网页 URL")
-                .define("url", "https://www.mcmod.cn/");
+                .define("url", "https://www.bilibili.com/video/BV1GJ411x7h7/?spm_id_from=333.337.search-card.all.click");
 
         builder.pop();
 

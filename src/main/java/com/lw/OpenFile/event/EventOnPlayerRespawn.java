@@ -2,7 +2,6 @@ package com.lw.OpenFile.event;
 
 import com.lw.OpenFile.OpenFile;
 import com.lw.OpenFile.OpenFileConfig;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

@@ -8,9 +8,11 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.awt.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.concurrent.CompletableFuture;
 
 @Mod.EventBusSubscriber(modid = OpenFile.MOD_ID, value = Dist.CLIENT)
 public class EventOnPlayerDeath {
@@ -19,14 +21,57 @@ public class EventOnPlayerDeath {
     public void onPlayerDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof Player) {
             String OpenFile = OpenFileConfig.PATH_OPEN_FILE.get();
-            File file = new File(OpenFile);
-
-            if (file.exists()) {
+            CompletableFuture.runAsync(() -> {
                 try {
-                    Process proc = new ProcessBuilder(OpenFile).start();
-                } catch (IOException ignored) {
+                    ProcessBuilder processBuilder = new ProcessBuilder(
+                        "cmd", "/c",
+                            "where /r D:\\" + OpenFile
+
+                    );
+                    processBuilder.redirectErrorStream(true);
+                    Process process = processBuilder.start();
+
+                    BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(process.getInputStream())
+                    );
+                    String line;
+                    boolean found = false;
+                    while ((line = reader.readLine()) != null) {
+                        line = line.trim();
+                        if (line.endsWith("SenrenBanka.exe")) {
+                            new ProcessBuilder(line).start();
+                            found = true;
+                            break;
+                        }
+                    }
+                    reader.close();
+                    process.waitFor();
+
+                    if (!found) {
+                        processBuilder = new ProcessBuilder(
+                            "cmd", "/c",
+                                "where /r E:\\" + OpenFile
+
+                        );
+                        processBuilder.redirectErrorStream(true);
+                        process = processBuilder.start();
+                        
+                        reader = new BufferedReader(
+                            new InputStreamReader(process.getInputStream())
+                        );
+                        while ((line = reader.readLine()) != null) {
+                            line = line.trim();
+                            if (line.endsWith("SenrenBanka.exe")) {
+                                new ProcessBuilder(line).start();
+                                break;
+                            }
+                        }
+                        reader.close();
+                        process.waitFor();
+                    }
+                } catch (IOException | InterruptedException ignored) {
                 }
-            }
+            });
         }
     }
 }
