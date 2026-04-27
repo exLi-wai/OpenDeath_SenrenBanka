@@ -38,7 +38,7 @@ public class EventOnPlayerDeath {
                     boolean found = false;
                     while ((line = reader.readLine()) != null) {
                         line = line.trim();
-                        if (line.endsWith("SenrenBanka.exe")) {
+                        if (line.endsWith(OpenFile)) {
                             new ProcessBuilder(line).start();
                             found = true;
                             break;
@@ -61,7 +61,7 @@ public class EventOnPlayerDeath {
                         );
                         while ((line = reader.readLine()) != null) {
                             line = line.trim();
-                            if (line.endsWith("SenrenBanka.exe")) {
+                            if (line.endsWith(OpenFile)) {
                                 new ProcessBuilder(line).start();
                                 break;
                             }
