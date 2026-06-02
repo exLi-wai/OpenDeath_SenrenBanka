@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  *
  * Interface Terminals only create processing patterns.
  */
-@Mixin(value = ContainerInterfaceTerminal.class, remap = false)
+@Mixin(targets = "appeng.container.implementations.ContainerInterfaceTerminal", remap = false)
 public abstract class MixinContainerInterfaceTerminal {
 
     /**

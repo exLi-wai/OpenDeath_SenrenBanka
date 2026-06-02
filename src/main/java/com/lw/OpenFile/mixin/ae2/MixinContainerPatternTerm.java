@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * ContainerPatternEncoder, not in ContainerPatternTerm.
  * We target the parent so Mixin can find the methods.
  */
-@Mixin(value = ContainerPatternEncoder.class, remap = false)
+@Mixin(targets = "appeng.container.implementations.ContainerPatternEncoder", remap = false)
 public abstract class MixinContainerPatternTerm {
 
     /**
