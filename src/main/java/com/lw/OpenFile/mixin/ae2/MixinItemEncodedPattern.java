@@ -18,7 +18,7 @@ import java.util.List;
  * Mixin for AE2's ItemEncodedPattern to display the target machine
  * in the pattern's tooltip, above the recipe info.
  */
-@Mixin(value = ItemEncodedPattern.class, remap = false)
+@Mixin(targets = "appeng.items.misc.ItemEncodedPattern", remap = false)
 public abstract class MixinItemEncodedPattern {
 
     @Inject(method = "addCheckedInformation", at = @At("HEAD"), remap = false)
